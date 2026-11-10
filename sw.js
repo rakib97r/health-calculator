@@ -1,5 +1,5 @@
 const CACHE='health-calculator-v3';
-const FILES=['./','./index.html','./manifest.webmanifest','./data/who-growth-data.json'];
+const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./data/who-growth-data.json'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
