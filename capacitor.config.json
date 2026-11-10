@@ -1,1 +1,6 @@
-{"appId":"com.rakib.healthcalculator","appName":"Health Calculator","webDir":".","bundledWebRuntime":false}
+{
+  "appId": "com.rakib.healthcalculator",
+  "appName": "Health Calculator",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
