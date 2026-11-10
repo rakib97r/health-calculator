@@ -22,7 +22,7 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 <div class="feature-layout">
 <div class="feature-row two">
 <button class="tile" onclick="show('child')">👶<b>শিশু ও কিশোরের বৃদ্ধি</b><small>০–১৯ বছর • WHO গ্রোথ রেফারেন্স</small></button>
-<button class="tile" onclick="show('adult')">🧍<b>প্রাপ্তবয়স্কের BMI</b><small>বয়স, ওজন ও প্রকৃত উচ্চতা</small></button>
+<button class="tile" onclick="show('adult')">🧍<b>প্রাপ্তবয়স্কের স্বাস্থ্যতথ্য</b><small>বয়স, লিঙ্গ ও উচ্চতা-ওজনের রেফারেন্স</small></button>
 </div>
 <div class="feature-row three">
 <button class="tile" onclick="show('preg')">🤰<b>গর্ভবতী মা</b><small>গর্ভকাল ও ওজন পরিবর্তন</small></button>
@@ -39,15 +39,18 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 <div class="row"><div class="field"><label>অতিরিক্ত মাস</label><input id="ageM" type="number" min="0" max="11" value="0"></div><div class="field"><label>বর্তমান ওজন (কেজি)</label><input id="weight" type="number" min="0.1" max="150" step=".1" placeholder="যেমন ১০.৫"></div></div>
 <div class="field"><label>বর্তমান উচ্চতা/দৈর্ঘ্য (সেমি) — জানা থাকলে</label><input id="height" type="number" min="30" max="220" step=".1" placeholder="যেমন ৮০"></div>
 <p class="sub">বয়স ও লিঙ্গ দিলেই WHO অনুযায়ী মধ্যম ওজন, উচ্চতা ও BMI রেফারেন্স দেখাবে। প্রকৃত BMI ও পুষ্টিগত অবস্থা নির্ণয়ে শিশুর বর্তমান উচ্চতা ও ওজন মাপা প্রয়োজন।</p>
-<button class="btn" onclick="childCalc()">মূল্যায়ন দেখাও</button><div id="childOut"></div>
+<div id="childOut"><div class="result">বয়স ও লিঙ্গ নির্বাচন করলেই WHO রেফারেন্স স্বয়ংক্রিয়ভাবে দেখা যাবে।</div></div>
 </div></section>
 <section id="adult" class="hidden">
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
-<div class="panel"><h2>প্রাপ্তবয়স্কের BMI</h2>
-<div class="row"><div class="field"><label>বয়স (বছর)</label><input id="adultAge" type="number" min="18" max="120"></div><div class="field"><label>ওজন (কেজি)</label><input id="adultWeight" type="number" min="1" max="300" step=".1"></div></div>
-<div class="field"><label>প্রকৃত উচ্চতা (সেমি)</label><input id="adultHeight" type="number" min="100" max="230" step=".1" placeholder="যেমন ১৬৫"></div>
-<button class="btn" onclick="adultCalc()">BMI হিসাব</button><div id="adultOut"></div>
-<div class="warning">শুধু বয়স ও ওজন দিয়ে ব্যক্তির প্রকৃত বা আদর্শ উচ্চতা বৈজ্ঞানিকভাবে নির্ণয় করা যায় না। তাই ভুল তথ্য না দেখিয়ে প্রকৃত উচ্চতা ইনপুট আবশ্যক রাখা হয়েছে।</div>
+<div class="panel"><h2>প্রাপ্তবয়স্কের স্বাস্থ্য রেফারেন্স</h2>
+<p class="sub">বয়স ও লিঙ্গ নির্বাচন করলেই প্রযোজ্য রেফারেন্স/সীমাবদ্ধতা স্বয়ংক্রিয়ভাবে দেখাবে।</p>
+<div class="row"><div class="field"><label>বয়স (বছর)</label><input id="adultAge" type="number" min="18" max="120" placeholder="যেমন ৩০"></div><div class="field"><label>লিঙ্গ</label><select id="adultSex"><option value="male">পুরুষ</option><option value="female">নারী</option></select></div></div>
+<div id="adultRefOut"><div class="result">বয়স লিখলেই তথ্য দেখা যাবে।</div></div>
+<h3 style="font-size:15px;margin:14px 0 5px">ঐচ্ছিক: নিজের মাপ</h3>
+<div class="row"><div class="field"><label>বর্তমান ওজন (কেজি)</label><input id="adultWeight" type="number" min="1" max="300" step=".1"></div><div class="field"><label>প্রকৃত উচ্চতা (সেমি)</label><input id="adultHeight" type="number" min="100" max="230" step=".1" placeholder="যেমন ১৬৫"></div></div>
+<div id="adultOut"></div>
+<div class="warning">২০ বছর বা তার বেশি বয়সে শুধু বয়স ও লিঙ্গ দিয়ে ব্যক্তির উচ্চতা/ওজন নির্ভুলভাবে অনুমান করা যায় না। WHO-এর ৫–১৯ বছরের গ্রোথ রেফারেন্স ১৯ বছর পর্যন্ত; প্রাপ্তবয়স্কের জন্য বয়সভিত্তিক ব্যক্তিগত উচ্চতা/ওজনের WHO চার্ট নেই। তাই অনুমান বানিয়ে দেখানো হচ্ছে না।</div>
 </div></section>
 <section id="preg" class="hidden">
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
@@ -67,14 +70,14 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 <div class="panel"><h2>রক্তের গ্লুকোজ মূল্যায়ন</h2>
 <div class="field"><label>পরীক্ষার ধরন</label><select id="glucoseType"><option value="fasting">ফাস্টিং (কমপক্ষে ৮ ঘণ্টা না খেয়ে)</option><option value="ogtt">৭৫ গ্রাম OGTT-এর ২ ঘণ্টা পর</option><option value="random">র‍্যান্ডম (যেকোনো সময়)</option></select></div>
 <div class="field"><label>গ্লুকোজের মাত্রা (mg/dL)</label><input id="glucoseValue" type="number" min="1" max="1000" step="1" placeholder="যেমন ১১০"></div>
-<button class="btn" onclick="glucoseCalc()">ফলাফল দেখাও</button><div id="glucoseOut"></div>
+<div id="glucoseOut"></div>
 <div class="warning">এই ব্যাখ্যা অগর্ভবতী প্রাপ্তবয়স্কদের জন্য প্রাথমিক স্ক্রিনিং সহায়তা। শিশু-কিশোর ও গর্ভাবস্থায় আলাদা মূল্যায়ন প্রয়োজন। গ্লুকোমিটারের রিডিং দিয়ে একা ডায়াবেটিস নির্ণয় করা যায় না; অস্বাভাবিক ফলাফল পরীক্ষাগার/চিকিৎসকের মাধ্যমে নিশ্চিত করতে হবে। র‍্যান্ডম রিডিং ২০০ mg/dL বা বেশি হলে উপসর্গ ও চিকিৎসাগত মূল্যায়ন জরুরি; উপসর্গ ছাড়া শুধু এই রিডিং রোগ নির্ণয় করে না।</div>
 </div></section>
 <section id="ageinfo" class="hidden">
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
 <div class="panel"><h2>বয়স অনুযায়ী স্বাস্থ্যতথ্য</h2>
 <div class="field"><label>বয়স (বছর)</label><input id="infoAge" type="number" min="0" max="120" placeholder="বয়স লিখো"></div>
-<button class="btn" onclick="ageInfoCalc()">তথ্য দেখাও</button><div id="ageInfoOut"></div>
+<div id="ageInfoOut"><div class="result">বয়স লিখলেই বয়সভিত্তিক স্বাস্থ্যতথ্য দেখা যাবে।</div></div>
 <p class="tiny">এগুলো সাধারণ স্বাস্থ্যশিক্ষামূলক স্মরণিকা। ব্যক্তির ঝুঁকি, উপসর্গ, পূর্বের রোগ ও জাতীয় টিকাদান/স্ক্রিনিং নির্দেশিকা অনুযায়ী পরামর্শ ভিন্ন হতে পারে।</p>
 </div></section>
 <div class="footer">WHO Child Growth Standards (2006) • WHO Growth Reference (2007)<br>WHO diabetes diagnostic criteria • Health Calculator • বাংলা সংস্করণ</div>
@@ -85,14 +88,14 @@ function show(id){['home','child','adult','preg','glucose','ageinfo'].forEach(x=
 function bn(n,d=1){return Number(n).toFixed(d).replace(/\d/g,x=>'০১২৩৪৫৬৭৮৯'[x])}
 function fmt(n,d=1){return Number.isFinite(n)?bn(n,d):'—'}
 function lmsZ(x,p){if(!p||!Number.isFinite(x)||x<=0)return null;let z=Math.abs(p.L)<1e-8?Math.log(x/p.M)/p.S:(Math.pow(x/p.M,p.L)-1)/(p.L*p.S);return Number.isFinite(z)?z:null}
-function interp(arr,age){if(!arr||!arr.length)return null;if(age<=arr[0].age)return arr[0];if(age>=arr[arr.length-1].age)return arr[arr.length-1];for(let i=1;i<arr.length;i++)if(arr[i].age>=age){let a=arr[i-1],b=arr[i],t=(age-a.age)/(b.age-a.age);return {L:a.L+(b.L-a.L)*t,M:a.M+(b.M-a.M)*t,S:a.S+(b.S-a.S)*t}}return null}
+function interp(arr,age){if(!arr||!arr.length||age<arr[0].age||age>arr[arr.length-1].age)return null;if(age===arr[0].age)return arr[0];if(age===arr[arr.length-1].age)return arr[arr.length-1];for(let i=1;i<arr.length;i++)if(arr[i].age>=age){let a=arr[i-1],b=arr[i],t=(age-a.age)/(b.age-a.age);return {L:a.L+(b.L-a.L)*t,M:a.M+(b.M-a.M)*t,S:a.S+(b.S-a.S)*t}}return null}
 function byX(source,x){let arr=Array.isArray(source)?source:Object.values(source||{});arr.sort((a,b)=>a.x-b.x);if(!arr.length||x<arr[0].x||x>arr[arr.length-1].x)return null;for(let i=1;i<arr.length;i++)if(arr[i].x>=x){let a=arr[i-1],b=arr[i],t=(x-a.x)/(b.x-a.x);return {L:a.L+(b.L-a.L)*t,M:a.M+(b.M-a.M)*t,S:a.S+(b.S-a.S)*t}}return arr[arr.length-1]}
-function assess(z,type,age){if(z===null)return 'পর্যাপ্ত তথ্য নেই';if(type==='height'&&z< -3)return 'গুরুতর খর্বতার সীমা';if(type==='height'&&z< -2)return 'খর্বতার সীমা';if(type==='weight'&&z< -3)return 'গুরুতর কম ওজনের সীমা';if(type==='weight'&&z< -2)return 'কম ওজনের সীমা';if(type==='bmi'&&age<5&&z< -2)return 'ক্ষীণতার সীমা';if(type==='bmi'&&age>=5&&z< -3)return 'গুরুতর পাতলাভাবের সীমা';if(type==='bmi'&&age>=5&&z< -2)return 'পাতলাভাবের সীমা';if(type==='bmi'&&age>=5&&z>2)return 'স্থূলতার সীমা';if(type==='bmi'&&age>=5&&z>1)return 'অতিরিক্ত ওজনের সীমা';if(type==='bmi'&&age<5&&z>3)return 'স্থূলতার সীমা';if(type==='bmi'&&age<5&&z>2)return 'অতিরিক্ত ওজনের সীমা';return 'রেফারেন্স সীমার মধ্যে'}
+function assess(z,type,age){if(z===null)return 'পর্যাপ্ত তথ্য নেই';if(type==='height'&&z< -3)return 'গুরুতর খর্বতার সীমা';if(type==='height'&&z< -2)return 'খর্বতার সীমা';if(type==='weight'&&z< -3)return 'গুরুতর কম ওজনের সীমা';if(type==='weight'&&z< -2)return 'কম ওজনের সীমা';if(type==='bmi'&&age<5&&z< -2)return 'ক্ষীণতার সীমা';if(type==='bmi'&&age>=5&&z< -3)return 'গুরুতর পাতলাভাবের সীমা';if(type==='bmi'&&age>=5&&z< -2)return 'পাতলাভাবের সীমা';if(type==='bmi'&&age>=5&&z>2)return 'স্থূলতার সীমা';if(type==='bmi'&&age>=5&&z>1)return 'অতিরিক্ত ওজনের সীমা';if(type==='bmi'&&age<5&&z>3)return 'স্থূলতার সীমা';if(type==='bmi'&&age<5&&z>2)return 'অতিরিক্ত ওজনের সীমা';if(type==='bmi'&&age<5&&z>1)return 'অতিরিক্ত ওজনের ঝুঁকির সীমা';return 'রেফারেন্স সীমার মধ্যে'}
 function childCalc(){if(!growth){alert('WHO ডেটা লোড হচ্ছে, একটু পরে চেষ্টা করো।');return}let sex=$('sex').value,y=+$('ageY').value,m=+$('ageM').value||0,w=+$('weight').value,h=+$('height').value,age=y+m/12,months=y*12+m;if($('ageY').value===''||!Number.isFinite(y)||y<0||y>19||m<0||m>11||age>19){alert('সঠিক বয়স দাও।');return}
 let refH=null,refW=null,refB=null,zh=null,zw=null,zb=null,range='';
 if(age<5){let mm=Math.max(0,Math.min(59,Math.round(months))),hp=growth.who05.lhfaMonthly[sex][mm],wp=growth.who05.wfaMonthly[sex][mm];refH=hp?.M;refW=wp?.M;zh=h?lmsZ(h,hp):null;zw=w?lmsZ(w,wp):null;let bmiRef=interp(growth.who05.bmiByAge[sex],age);refB=bmiRef?.M||(refH&&refW?refW/Math.pow(refH/100,2):null);if(w&&h){let tab=months<24?growth.who05.wflByLength[sex]:growth.who05.wfhByHeight[sex];zb=lmsZ(w,byX(tab,h))}range=mm+' মাস'}
 else{let hp=interp(growth.who519.height[sex],age),wp=interp(growth.who519.weight[sex],age),bp=interp(growth.who519.bmi[sex],age);refH=hp?.M;refW=wp?.M;refB=bp?.M;zh=h?lmsZ(h,hp):null;zw=(w&&age<=10)?lmsZ(w,wp):null;zb=(w&&h)?lmsZ(w/Math.pow(h/100,2),bp):null;range=fmt(age,1)+' বছর'}
-let bmi=(w&&h)?w/Math.pow(h/100,2):null;
+let bmi=(w>0&&h>0)?w/Math.pow(h/100,2):null;
 let bmiLabel=(age<2?'WHO BMI মধ্যম রেফারেন্স':age<5?'আনুমানিক BMI রেফারেন্স':'WHO BMI মধ্যম রেফারেন্স');let out='<div class="statgrid"><div class="stat"><small>WHO মধ্যম ওজন</small><b>'+(refW?fmt(refW)+' কেজি':'প্রযোজ্য নয়')+'</b><div class="tiny">'+(age>10?'১০ বছরের পর WHO weight-for-age নেই':'বয়স ও লিঙ্গভিত্তিক')+'</div></div><div class="stat"><small>WHO মধ্যম উচ্চতা</small><b>'+fmt(refH)+' সেমি</b><div class="tiny">বয়স ও লিঙ্গভিত্তিক</div></div><div class="stat"><small>'+bmiLabel+'</small><b>'+fmt(refB,2)+'</b><div class="tiny">মধ্যম BMI (রেফারেন্স)</div></div><div class="stat"><small>প্রকৃত BMI</small><b>'+(bmi?fmt(bmi,2):'উচ্চতা দিন')+'</b><div class="tiny">বর্তমান ওজন ও উচ্চতা দিয়ে</div></div></div>';
 let lines=[];if(h&&zh!==null)lines.push('উচ্চতা Z-score: '+fmt(zh,2)+' — '+assess(zh,'height',age));if(w&&zw!==null)lines.push('ওজন Z-score: '+fmt(zw,2)+' — '+assess(zw,'weight',age));if(w&&h&&zb!==null)lines.push((age<5?'ওজন-দৈর্ঘ্য/উচ্চতা':'BMI-for-age')+' Z-score: '+fmt(zb,2)+' — '+assess(zb,'bmi',age));
 out+='<div class="result"><b>বয়স:</b> '+range+'<br>'+(lines.length?lines.join('<br>'):'প্রকৃত ওজন ও উচ্চতা দিলে Z-score মূল্যায়ন দেখাবে।')+'</div><p class="tiny">WHO মধ্যম মান কোনো শিশুর ব্যক্তিগত লক্ষ্য নয়। ধারাবাহিক গ্রোথ চার্ট, সঠিক মাপ ও ক্লিনিক্যাল মূল্যায়ন একসঙ্গে বিবেচনা করতে হবে। ০–৫ বছরে ২৪ মাসের কম বয়সে দৈর্ঘ্য (শোয়ানো) এবং ২৪ মাস বা বেশি বয়সে দাঁড়ানো উচ্চতা ব্যবহার করো। ২–৫ বছরে BMI রেফারেন্সটি মধ্যম ওজন/উচ্চতা থেকে আনুমানিক; শ্রেণিবিন্যাসের জন্য WHO weight-for-height/length Z-score ব্যবহার করা হয়েছে।</p>';
@@ -125,7 +128,23 @@ function ageInfoCalc(){
  else{group='৬০ বছর বা বেশি: বয়স্ক';items=['রক্তচাপ, ডায়াবেটিস ও চলমান ওষুধের নিয়মিত পর্যালোচনা','দৃষ্টি, শ্রবণ, দাঁত, হাড়-জয়েন্ট ও চলাফেরার সক্ষমতা মূল্যায়ন','পড়ে যাওয়ার ঝুঁকি কমাতে ঘরের পরিবেশ নিরাপদ রাখা','টিকা, পুষ্টি, ঘুম, স্মৃতিশক্তি ও মানসিক সুস্থতা নিয়ে পরামর্শ'];}
  $('ageInfoOut').innerHTML='<div class="result"><b>বয়সভিত্তিক বিভাগ: '+group+'</b><ul>'+items.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>';
 }
-function adultCalc(){let a=+$('adultAge').value,w=+$('adultWeight').value,h=+$('adultHeight').value;if(!a||a<18||a>120||!w||w<=0){$('adultOut').innerHTML='<div class="warning">১৮ বছর বা বেশি বয়স এবং সঠিক ওজন দাও।</div>';return}if(!h||h<=0){$('adultOut').innerHTML='<div class="result">বয়স: '+fmt(a,0)+' বছর<br>ওজন: '+fmt(w)+' কেজি<br><b>প্রকৃত উচ্চতা ছাড়া BMI হিসাব করা যায় না।</b></div>';return}let bmi=w/Math.pow(h/100,2),label=bmi<18.5?'কম ওজন':bmi<25?'স্বাভাবিক সীমা':bmi<30?'অতিরিক্ত ওজন':'স্থূলতার সীমা',min=18.5*Math.pow(h/100,2),max=24.9*Math.pow(h/100,2);$('adultOut').innerHTML='<div class="result">BMI: <span class="metric">'+fmt(bmi,2)+'</span><br>শ্রেণি: <b>'+label+'</b><br>এই উচ্চতায় BMI ১৮.৫–২৪.৯ অনুযায়ী ওজনের পরিসর: '+fmt(min)+'–'+fmt(max)+' কেজি.<br><small>সাধারণ প্রাপ্তবয়স্ক স্ক্রিনিং সীমা; গর্ভাবস্থা ও বিশেষ শারীরিক অবস্থায় আলাদা মূল্যায়ন প্রয়োজন।</small></div>'}
+function adultCalc(){
+ const a=$('adultAge').value===''?NaN:+$('adultAge').value,sex=$('adultSex').value,w=+$('adultWeight').value,h=+$('adultHeight').value;
+ const ref=$('adultRefOut');
+ if(!Number.isFinite(a)||a<18||a>120){ref.innerHTML='<div class="warning">১৮ থেকে ১২০ বছরের মধ্যে বয়স লিখো।</div>';$('adultOut').innerHTML='';return}
+ if(growth&&a<=19){
+  const hp=interp(growth.who519.height[sex],a),bp=interp(growth.who519.bmi[sex],a);
+  ref.innerHTML='<div class="statgrid"><div class="stat"><small>WHO মধ্যম উচ্চতা (১৮–১৯ বছর)</small><b>'+fmt(hp?.M)+' সেমি</b><div class="tiny">লিঙ্গ ও বয়সভিত্তিক</div></div><div class="stat"><small>WHO মধ্যম BMI</small><b>'+fmt(bp?.M,2)+'</b><div class="tiny">BMI-for-age রেফারেন্স</div></div></div><p class="tiny">এটি ৫–১৯ বছরের WHO কিশোর-কিশোরী রেফারেন্স; ২০ বছর বা তার বেশি বয়সে প্রযোজ্য নয়।</p>';
+ }else{
+  ref.innerHTML='<div class="result"><b>'+fmt(a,0)+' বছর • '+(sex==='male'?'পুরুষ':'নারী')+'</b><br>এই বয়সের জন্য WHO-এর নির্দিষ্ট গড় উচ্চতা/ওজনের রেফারেন্স নেই। বয়স দিয়ে ব্যক্তির উচ্চতা বা ওজন অনুমান করা নির্ভরযোগ্য নয়। নিজের মাপ দিলে নিচে প্রাসঙ্গিক হিসাব দেখা যাবে।</div>';
+ }
+ if(w>0&&h>0){
+  const bmi=w/Math.pow(h/100,2),label=bmi<18.5?'কম ওজনের সীমা':bmi<25?'স্বাভাবিক BMI সীমা':bmi<30?'অতিরিক্ত ওজনের সীমা':'স্থূলতার সীমা';
+  const min=18.5*Math.pow(h/100,2),max=24.9*Math.pow(h/100,2);
+  $('adultOut').innerHTML='<div class="result">বর্তমান BMI: <span class="metric">'+fmt(bmi,2)+'</span><br>শ্রেণি: <b>'+label+'</b><br>এই উচ্চতায় BMI ১৮.৫–২৪.৯ অনুযায়ী ওজনের রেফারেন্স পরিসর: '+fmt(min)+'–'+fmt(max)+' কেজি.<br><small>এটি সাধারণ প্রাপ্তবয়স্ক স্ক্রিনিং সীমা; ব্যক্তিগত স্বাস্থ্যপরিস্থিতি বিবেচ্য।</small></div>';
+ }else if(w>0||h>0){$('adultOut').innerHTML='<div class="result">ওজন ও উচ্চতা—দুটিই দিলে BMI/ওজনের রেফারেন্স হিসাব দেখাবে।</div>';}
+ else $('adultOut').innerHTML='';
+}
 function pregCalc(){
  const raw=$('lmpDate')?.value,out=$('pregOut'),wout=$('pregWeightOut');
  if(!raw){out.innerHTML='<div class="result">LMP তারিখ নির্বাচন করলেই হিসাব ও পরামর্শ দেখা যাবে।</div>';if(wout)wout.innerHTML='';return}
@@ -140,13 +159,28 @@ function pregCalc(){
  if(weeks<14){stage='প্রথম ট্রাইমেস্টার';tips=['এখনই/১২ সপ্তাহের মধ্যে প্রথম ANC ভিজিট ও গর্ভকালীন নিবন্ধন করাও।','রক্তচাপ, ওজন, Hb, রক্তের গ্রুপ/Rh, প্রস্রাব ও প্রয়োজনীয় সংক্রমণ পরীক্ষা স্বাস্থ্যকর্মী/চিকিৎসকের পরামর্শে করাও।','ফলিক অ্যাসিড/আয়রনসহ প্রয়োজনীয় সাপ্লিমেন্ট স্থানীয় ANC নির্দেশনা অনুযায়ী নাও; নিজে থেকে ওষুধ শুরু বা বন্ধ কোরো না।','বমি বেশি হয়ে পানি বা খাবার রাখতে না পারলে স্বাস্থ্যকেন্দ্রে যোগাযোগ করো।']}
  else if(weeks<28){stage='দ্বিতীয় ট্রাইমেস্টার';tips=['নির্ধারিত ANC ফলোআপ চালিয়ে যাও; প্রতিবার রক্তচাপ, ওজন ও প্রয়োজনীয় পরীক্ষা পর্যালোচনা করাও।','চিকিৎসকের পরামর্শে ১৮–২২ সপ্তাহের মধ্যে শিশুর গঠনগত আল্ট্রাসাউন্ডের সময় জেনে নাও।','শিশুর নড়াচড়া অনুভব শুরু হলে তার স্বাভাবিক ধরন খেয়াল রাখো।','আয়রন-ফলিক অ্যাসিড, ক্যালসিয়াম ও Td টিকা স্থানীয় জাতীয় নির্দেশিকা অনুযায়ী সম্পন্ন করো।']}
  else{stage='তৃতীয় ট্রাইমেস্টার';tips=['ANC ফলোআপ ঘন ঘন করো; রক্তচাপ, শিশুর বৃদ্ধি/অবস্থান ও প্রয়োজনীয় পরীক্ষা পর্যালোচনা করাও।','প্রসব কোথায় হবে, কীভাবে যাবে, জরুরি যোগাযোগ ও রক্তদাতার পরিকল্পনা আগে থেকে রাখো।','শিশুর নড়াচড়ার স্বাভাবিক ধরন খেয়াল করো; নড়াচড়া কমে গেলে অপেক্ষা না করে দ্রুত হাসপাতালে যাও।','প্রসবের লক্ষণ, নবজাতকের যত্ন ও বুকের দুধ খাওয়ানোর প্রস্তুতি নাও।']}
- const anc='WHO-এর সাধারণ ৮-যোগাযোগ ANC মডেলে ভিজিটের সময় প্রায় ১২, ২০, ২৬, ৩০, ৩৪, ৩৬, ৩৮ ও ৪০ সপ্তাহ। স্থানীয় জাতীয় প্রটোকল ও ব্যক্তিগত ঝুঁকি অনুযায়ী সময়সূচি ভিন্ন হতে পারে—তোমার ANC প্রদানকারীর পরিকল্পনা অনুসরণ করো।';
+ const ancWeeks=[12,20,26,30,34,36,38,40];
+ const ancRows=ancWeeks.map(wk=>{const due=new Date(lmp.getTime()+wk*7*dayMs);const status=weeks>wk?'সময় পেরিয়েছে':weeks===wk?'এই সপ্তাহে':'সামনে';return '<li><b>'+bn(wk,0)+' সপ্তাহ</b> — '+dateFmt(due)+' <span class="tiny">('+status+')</span></li>'}).join('');
+ const anc='WHO-এর সাধারণ ৮-যোগাযোগ ANC মডেলে প্রস্তাবিত যোগাযোগের সময় ১২, ২০, ২৬, ৩০, ৩৪, ৩৬, ৩৮ ও ৪০ সপ্তাহ। স্থানীয় জাতীয় প্রটোকল ও ব্যক্তিগত ঝুঁকি অনুযায়ী সময়সূচি ভিন্ন হতে পারে।';
  const danger='যেকোনো সময় যোনিপথে রক্তপাত, তীব্র পেটব্যথা, প্রচণ্ড মাথাব্যথা/চোখে ঝাপসা দেখা, খিঁচুনি, জ্বর, শ্বাসকষ্ট, পানি ভেঙে যাওয়া বা শিশুর নড়াচড়া কমে গেলে দ্রুত নিকটস্থ হাসপাতাল/জরুরি সেবায় যাও।';
- out.innerHTML='<div class="statgrid"><div class="stat"><small>বর্তমান গর্ভকাল</small><b>'+bn(weeks,0)+' সপ্তাহ '+bn(rem,0)+' দিন</b></div><div class="stat"><small>ট্রাইমেস্টার</small><b>'+stage+'</b></div><div class="stat"><small>সম্ভাব্য প্রসবের তারিখ (EDD)</small><b>'+dateFmt(edd)+'</b></div><div class="stat"><small>LMP তারিখ</small><b>'+dateFmt(lmp)+'</b></div></div><div class="result"><b>এই সময়ের করণীয়</b><ul>'+tips.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><b>ANC ভিজিটের স্মরণিকা</b><br>'+anc+'</p><p><b>জরুরি বিপদচিহ্ন</b><br>'+danger+'</p></div><p class="tiny">EDD একটি আনুমানিক তারিখ; অধিকাংশ প্রসব ঠিক ওই দিন হয় না। LMP নিশ্চিত না হলে বা মাসিক অনিয়মিত হলে প্রথম দিকের আল্ট্রাসাউন্ড ও চিকিৎসকের মূল্যায়নে তারিখ সংশোধন হতে পারে।</p>';
+ out.innerHTML='<div class="statgrid"><div class="stat"><small>বর্তমান গর্ভকাল</small><b>'+bn(weeks,0)+' সপ্তাহ '+bn(rem,0)+' দিন</b></div><div class="stat"><small>ট্রাইমেস্টার</small><b>'+stage+'</b></div><div class="stat"><small>সম্ভাব্য প্রসবের তারিখ (EDD)</small><b>'+dateFmt(edd)+'</b></div><div class="stat"><small>LMP তারিখ</small><b>'+dateFmt(lmp)+'</b></div></div><div class="result"><b>এই সময়ের করণীয়</b><ul>'+tips.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><b>ANC ভিজিটের সময়সূচি</b><br>'+anc+'<ul>'+ancRows+'</ul></p><p><b>জরুরি বিপদচিহ্ন</b><br>'+danger+'</p></div><p class="tiny">EDD একটি আনুমানিক তারিখ; অধিকাংশ প্রসব ঠিক ওই দিন হয় না। LMP নিশ্চিত না হলে বা মাসিক অনিয়মিত হলে প্রথম দিকের আল্ট্রাসাউন্ড ও চিকিৎসকের মূল্যায়নে তারিখ সংশোধন হতে পারে।</p>';
  const h=+$('pHeight').value,p=+$('preWeight').value,n=+$('nowWeight').value;
  if(wout){if(h>0&&p>0&&n>0){const bmi=p/Math.pow(h/100,2),change=n-p;wout.innerHTML='<div class="result">গর্ভধারণ-পূর্ব BMI: <b>'+fmt(bmi,2)+'</b><br>ওজনের পরিবর্তন: <b>'+(change>=0?'+':'')+fmt(change)+' কেজি</b><br><small>ওজন বৃদ্ধির লক্ষ্য BMI, একক/একাধিক গর্ভ, গর্ভকাল ও চিকিৎসকের মূল্যায়নের ওপর নির্ভর করে।</small></div>'}else wout.innerHTML=''}
 }
 
-fetch('./data/who-growth-data.json').then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{growth=d}).catch(()=>{document.querySelector('main').insertAdjacentHTML('afterbegin','<div class="warning">WHO রেফারেন্স ডেটা লোড হয়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করো।</div>')});
+function runAutoCalculations(){
+ if(growth && !$('child').classList.contains('hidden'))childCalc();
+ if(!$('adult').classList.contains('hidden'))adultCalc();
+ if(!$('ageinfo').classList.contains('hidden'))ageInfoCalc();
+ if(!$('glucose').classList.contains('hidden')&&$('glucoseValue').value)glucoseCalc();
+}
+['sex','ageY','ageM','weight','height'].forEach(id=>$(id).addEventListener('input',()=>{if(growth)childCalc()}));
+['sex','ageY','ageM','weight','height'].forEach(id=>$(id).addEventListener('change',()=>{if(growth)childCalc()}));
+['adultAge','adultSex','adultWeight','adultHeight'].forEach(id=>$(id).addEventListener('input',adultCalc));
+['adultAge','adultSex','adultWeight','adultHeight'].forEach(id=>$(id).addEventListener('change',adultCalc));
+$('infoAge').addEventListener('input',ageInfoCalc);
+$('glucoseType').addEventListener('change',glucoseCalc);
+$('glucoseValue').addEventListener('input',()=>{if($('glucoseValue').value)glucoseCalc();else $('glucoseOut').innerHTML=''});
+fetch('./data/who-growth-data.json').then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{growth=d;childCalc();adultCalc()}).catch(()=>{document.querySelector('main').insertAdjacentHTML('afterbegin','<div class="warning">WHO রেফারেন্স ডেটা লোড হয়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করো।</div>')});
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script></body></html>
