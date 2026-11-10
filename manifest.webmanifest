@@ -1,1 +1,1 @@
-{"name":"Health Calculator","short_name":"Health Calc","lang":"bn","start_url":"./","display":"standalone","background_color":"#f5faf7","theme_color":"#13845b","description":"সুস্থ জীবনের স্মার্ট সহায়ক"}
+{"name":"Health Calculator","short_name":"Health Calc","lang":"bn","start_url":"./","scope":"./","display":"standalone","background_color":"#f5faf7","theme_color":"#13845b","description":"WHO Growth Standards ভিত্তিক স্বাস্থ্য ক্যালকুলেটর","icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
