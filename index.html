@@ -51,11 +51,16 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 </div></section>
 <section id="preg" class="hidden">
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
-<div class="panel"><h2>গর্ভবতী মায়ের ওজন পরিবর্তন</h2>
-<div class="row"><div class="field"><label>গর্ভকাল (সপ্তাহ)</label><input id="weeks" type="number" min="1" max="42"></div><div class="field"><label>উচ্চতা (সেমি)</label><input id="pHeight" type="number" min="100" max="220" step=".1"></div></div>
-<div class="row"><div class="field"><label>গর্ভধারণের আগের ওজন (কেজি)</label><input id="preWeight" type="number" min="20" max="250" step=".1"></div><div class="field"><label>বর্তমান ওজন (কেজি)</label><input id="nowWeight" type="number" min="20" max="250" step=".1"></div></div>
-<button class="btn" onclick="pregCalc()">হিসাব দেখাও</button><div id="pregOut"></div>
-<div class="warning">ওজন বৃদ্ধির লক্ষ্য গর্ভধারণ-পূর্ব BMI, গর্ভকাল, একক/একাধিক ভ্রূণ ও জাতীয় নির্দেশিকার ওপর নির্ভর করে। এই অংশটি শুধু BMI ও ওজনের পরিবর্তন হিসাব করে; ANC মূল্যায়নের বিকল্প নয়।</div>
+<div class="panel"><h2>গর্ভকাল ও ANC সহায়ক</h2>
+<p class="sub">শেষ মাসিকের প্রথম দিন (LMP) দিলে গর্ভকাল, সম্ভাব্য প্রসবের তারিখ ও সময়ভিত্তিক পরামর্শ স্বয়ংক্রিয়ভাবে দেখাবে।</p>
+<div class="field"><label>শেষ মাসিকের প্রথম দিন (LMP)</label><input id="lmpDate" type="date" oninput="pregCalc()" onchange="pregCalc()"></div>
+<div id="pregOut"><div class="result">LMP তারিখ নির্বাচন করলেই হিসাব ও পরামর্শ দেখা যাবে।</div></div>
+<h3 style="font-size:15px;margin:14px 0 5px">ঐচ্ছিক: ওজনের পরিবর্তন</h3>
+<p class="tiny">উচ্চতা ও গর্ভধারণের আগের/বর্তমান ওজন দিলে BMI ও ওজনের পরিবর্তন হিসাব হবে।</p>
+<div class="row"><div class="field"><label>উচ্চতা (সেমি)</label><input id="pHeight" type="number" min="100" max="220" step=".1" oninput="pregCalc()"></div><div class="field"><label>গর্ভধারণের আগের ওজন (কেজি)</label><input id="preWeight" type="number" min="20" max="250" step=".1" oninput="pregCalc()"></div></div>
+<div class="field"><label>বর্তমান ওজন (কেজি)</label><input id="nowWeight" type="number" min="20" max="250" step=".1" oninput="pregCalc()"></div>
+<div id="pregWeightOut"></div>
+<div class="warning">EDD LMP থেকে ২৮০ দিন ধরে আনুমানিক হিসাব। মাসিক অনিয়মিত হলে, LMP নিশ্চিত না হলে বা আল্ট্রাসাউন্ডে ভিন্ন বয়স এলে চিকিৎসকের নির্ধারিত EDD অনুসরণ করবে। এটি ANC/চিকিৎসকের মূল্যায়নের বিকল্প নয়।</div>
 </div></section>
 <section id="glucose" class="hidden">
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
@@ -121,7 +126,27 @@ function ageInfoCalc(){
  $('ageInfoOut').innerHTML='<div class="result"><b>বয়সভিত্তিক বিভাগ: '+group+'</b><ul>'+items.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>';
 }
 function adultCalc(){let a=+$('adultAge').value,w=+$('adultWeight').value,h=+$('adultHeight').value;if(!a||a<18||a>120||!w||w<=0){$('adultOut').innerHTML='<div class="warning">১৮ বছর বা বেশি বয়স এবং সঠিক ওজন দাও।</div>';return}if(!h||h<=0){$('adultOut').innerHTML='<div class="result">বয়স: '+fmt(a,0)+' বছর<br>ওজন: '+fmt(w)+' কেজি<br><b>প্রকৃত উচ্চতা ছাড়া BMI হিসাব করা যায় না।</b></div>';return}let bmi=w/Math.pow(h/100,2),label=bmi<18.5?'কম ওজন':bmi<25?'স্বাভাবিক সীমা':bmi<30?'অতিরিক্ত ওজন':'স্থূলতার সীমা',min=18.5*Math.pow(h/100,2),max=24.9*Math.pow(h/100,2);$('adultOut').innerHTML='<div class="result">BMI: <span class="metric">'+fmt(bmi,2)+'</span><br>শ্রেণি: <b>'+label+'</b><br>এই উচ্চতায় BMI ১৮.৫–২৪.৯ অনুযায়ী ওজনের পরিসর: '+fmt(min)+'–'+fmt(max)+' কেজি.<br><small>সাধারণ প্রাপ্তবয়স্ক স্ক্রিনিং সীমা; গর্ভাবস্থা ও বিশেষ শারীরিক অবস্থায় আলাদা মূল্যায়ন প্রয়োজন।</small></div>'}
-function pregCalc(){let wk=+$('weeks').value,h=+$('pHeight').value,p=+$('preWeight').value,n=+$('nowWeight').value;if(!wk||wk<1||wk>42||!h||!p||!n){$('pregOut').innerHTML='<div class="warning">সব তথ্য সঠিকভাবে পূরণ করো।</div>';return}let bmi=p/Math.pow(h/100,2),g=n-p;$('pregOut').innerHTML='<div class="result">গর্ভকাল: '+fmt(wk,0)+' সপ্তাহ<br>গর্ভধারণ-পূর্ব BMI: <b>'+fmt(bmi,2)+'</b><br>ওজনের পরিবর্তন: <b>'+(g>=0?'+':'')+fmt(g)+' কেজি</b></div>'}
+function pregCalc(){
+ const raw=$('lmpDate')?.value,out=$('pregOut'),wout=$('pregWeightOut');
+ if(!raw){out.innerHTML='<div class="result">LMP তারিখ নির্বাচন করলেই হিসাব ও পরামর্শ দেখা যাবে।</div>';if(wout)wout.innerHTML='';return}
+ const parts=raw.split('-').map(Number),lmp=new Date(parts[0],parts[1]-1,parts[2]);
+ if(!Number.isFinite(lmp.getTime())){out.innerHTML='<div class="warning">সঠিক LMP তারিখ নির্বাচন করো।</div>';return}
+ const today=new Date();today.setHours(0,0,0,0);const dayMs=86400000,days=Math.floor((today-lmp)/dayMs);
+ if(days<0){out.innerHTML='<div class="warning">LMP তারিখ ভবিষ্যতের হতে পারে না। সঠিক তারিখ দাও।</div>';return}
+ if(days>315){out.innerHTML='<div class="warning">LMP থেকে ৪৫ সপ্তাহের বেশি হয়েছে। এই হিসাবের ওপর নির্ভর না করে দ্রুত চিকিৎসক/স্বাস্থ্যকেন্দ্রে যোগাযোগ করো।</div>';return}
+ const weeks=Math.floor(days/7),rem=days%7,edd=new Date(lmp.getTime()+280*dayMs);
+ const dateFmt=d=>new Intl.DateTimeFormat('bn-BD',{day:'numeric',month:'long',year:'numeric'}).format(d);
+ let stage,tips=[];
+ if(weeks<14){stage='প্রথম ট্রাইমেস্টার';tips=['এখনই/১২ সপ্তাহের মধ্যে প্রথম ANC ভিজিট ও গর্ভকালীন নিবন্ধন করাও।','রক্তচাপ, ওজন, Hb, রক্তের গ্রুপ/Rh, প্রস্রাব ও প্রয়োজনীয় সংক্রমণ পরীক্ষা স্বাস্থ্যকর্মী/চিকিৎসকের পরামর্শে করাও।','ফলিক অ্যাসিড/আয়রনসহ প্রয়োজনীয় সাপ্লিমেন্ট স্থানীয় ANC নির্দেশনা অনুযায়ী নাও; নিজে থেকে ওষুধ শুরু বা বন্ধ কোরো না।','বমি বেশি হয়ে পানি বা খাবার রাখতে না পারলে স্বাস্থ্যকেন্দ্রে যোগাযোগ করো।']}
+ else if(weeks<28){stage='দ্বিতীয় ট্রাইমেস্টার';tips=['নির্ধারিত ANC ফলোআপ চালিয়ে যাও; প্রতিবার রক্তচাপ, ওজন ও প্রয়োজনীয় পরীক্ষা পর্যালোচনা করাও।','চিকিৎসকের পরামর্শে ১৮–২২ সপ্তাহের মধ্যে শিশুর গঠনগত আল্ট্রাসাউন্ডের সময় জেনে নাও।','শিশুর নড়াচড়া অনুভব শুরু হলে তার স্বাভাবিক ধরন খেয়াল রাখো।','আয়রন-ফলিক অ্যাসিড, ক্যালসিয়াম ও Td টিকা স্থানীয় জাতীয় নির্দেশিকা অনুযায়ী সম্পন্ন করো।']}
+ else{stage='তৃতীয় ট্রাইমেস্টার';tips=['ANC ফলোআপ ঘন ঘন করো; রক্তচাপ, শিশুর বৃদ্ধি/অবস্থান ও প্রয়োজনীয় পরীক্ষা পর্যালোচনা করাও।','প্রসব কোথায় হবে, কীভাবে যাবে, জরুরি যোগাযোগ ও রক্তদাতার পরিকল্পনা আগে থেকে রাখো।','শিশুর নড়াচড়ার স্বাভাবিক ধরন খেয়াল করো; নড়াচড়া কমে গেলে অপেক্ষা না করে দ্রুত হাসপাতালে যাও।','প্রসবের লক্ষণ, নবজাতকের যত্ন ও বুকের দুধ খাওয়ানোর প্রস্তুতি নাও।']}
+ const anc='WHO-এর সাধারণ ৮-যোগাযোগ ANC মডেলে ভিজিটের সময় প্রায় ১২, ২০, ২৬, ৩০, ৩৪, ৩৬, ৩৮ ও ৪০ সপ্তাহ। স্থানীয় জাতীয় প্রটোকল ও ব্যক্তিগত ঝুঁকি অনুযায়ী সময়সূচি ভিন্ন হতে পারে—তোমার ANC প্রদানকারীর পরিকল্পনা অনুসরণ করো।';
+ const danger='যেকোনো সময় যোনিপথে রক্তপাত, তীব্র পেটব্যথা, প্রচণ্ড মাথাব্যথা/চোখে ঝাপসা দেখা, খিঁচুনি, জ্বর, শ্বাসকষ্ট, পানি ভেঙে যাওয়া বা শিশুর নড়াচড়া কমে গেলে দ্রুত নিকটস্থ হাসপাতাল/জরুরি সেবায় যাও।';
+ out.innerHTML='<div class="statgrid"><div class="stat"><small>বর্তমান গর্ভকাল</small><b>'+bn(weeks,0)+' সপ্তাহ '+bn(rem,0)+' দিন</b></div><div class="stat"><small>ট্রাইমেস্টার</small><b>'+stage+'</b></div><div class="stat"><small>সম্ভাব্য প্রসবের তারিখ (EDD)</small><b>'+dateFmt(edd)+'</b></div><div class="stat"><small>LMP তারিখ</small><b>'+dateFmt(lmp)+'</b></div></div><div class="result"><b>এই সময়ের করণীয়</b><ul>'+tips.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><b>ANC ভিজিটের স্মরণিকা</b><br>'+anc+'</p><p><b>জরুরি বিপদচিহ্ন</b><br>'+danger+'</p></div><p class="tiny">EDD একটি আনুমানিক তারিখ; অধিকাংশ প্রসব ঠিক ওই দিন হয় না। LMP নিশ্চিত না হলে বা মাসিক অনিয়মিত হলে প্রথম দিকের আল্ট্রাসাউন্ড ও চিকিৎসকের মূল্যায়নে তারিখ সংশোধন হতে পারে।</p>';
+ const h=+$('pHeight').value,p=+$('preWeight').value,n=+$('nowWeight').value;
+ if(wout){if(h>0&&p>0&&n>0){const bmi=p/Math.pow(h/100,2),change=n-p;wout.innerHTML='<div class="result">গর্ভধারণ-পূর্ব BMI: <b>'+fmt(bmi,2)+'</b><br>ওজনের পরিবর্তন: <b>'+(change>=0?'+':'')+fmt(change)+' কেজি</b><br><small>ওজন বৃদ্ধির লক্ষ্য BMI, একক/একাধিক গর্ভ, গর্ভকাল ও চিকিৎসকের মূল্যায়নের ওপর নির্ভর করে।</small></div>'}else wout.innerHTML=''}
+}
+
 fetch('./data/who-growth-data.json').then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{growth=d}).catch(()=>{document.querySelector('main').insertAdjacentHTML('afterbegin','<div class="warning">WHO রেফারেন্স ডেটা লোড হয়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করো।</div>')});
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script></body></html>
