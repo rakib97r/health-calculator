@@ -9,22 +9,26 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,"Noto Sans Bengali",sans-serif;line-height:1.5}
 header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:24px 18px;border-radius:0 0 25px 25px}header .inner{max-width:780px;margin:auto}header h1{margin:0 0 5px;font-size:25px}header p{margin:0;font-size:13px;color:#dff4e8}
 .wrap{max-width:780px;margin:auto;padding:16px}.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:16px;margin:14px 0;box-shadow:0 3px 12px #0c4b3008}.panel h2{font-size:19px;margin:0 0 13px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tile{background:white;border:1px solid var(--line);border-radius:17px;padding:16px;text-align:left;font:inherit;color:var(--ink);min-height:110px}.tile b{display:block;margin:7px 0}.tile small,.sub{color:var(--muted);font-size:13px;line-height:1.6}
+.feature-layout{display:grid;gap:12px}.feature-row{display:grid;gap:12px}.feature-row.two{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-row.three{grid-template-columns:repeat(3,minmax(0,1fr))}.tile{background:white;border:1px solid var(--line);border-radius:17px;padding:14px 12px;text-align:left;font:inherit;color:var(--ink);min-height:126px;min-width:0;overflow-wrap:anywhere}.tile b{display:block;margin:7px 0;font-size:14px;line-height:1.4}.tile small,.sub{color:var(--muted);font-size:12px;line-height:1.55}
 .field{min-width:0}.field label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}.field input,.field select{width:100%;border:1px solid #cbdcd2;border-radius:11px;padding:12px;font:inherit;background:white;color:var(--ink);min-width:0}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.field{margin:10px 0}
 .btn{border:0;border-radius:12px;background:var(--g);color:white;padding:13px 16px;width:100%;font:inherit;font-weight:700;margin-top:8px}.back{border:0;background:none;color:var(--d);font:inherit;font-weight:700;padding:8px 0}.result{background:var(--p);border:1px solid #cce7d8;border-radius:13px;padding:13px;margin-top:12px;line-height:1.8}.warning{background:#fff4df;border:1px solid #f1dfb9;border-radius:12px;padding:12px;font-size:13px;line-height:1.6;margin:12px 0}.hidden{display:none!important}.footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}.metric{font-size:22px;color:var(--d);font-weight:800}.statgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}.stat{background:#f7fbf8;border:1px solid var(--line);border-radius:12px;padding:11px}.stat small{display:block;color:var(--muted);font-size:12px}.stat b{font-size:19px;color:var(--d)}.tiny{font-size:11px;color:var(--muted)}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:600px){.feature-layout{gap:14px}.tile{padding:17px;min-height:118px}.tile b{font-size:15px}.tile small{font-size:13px}}
 </style></head>
 <body>
 <header><div class="inner"><h1>Health Calculator</h1><p>WHO Growth Standards • Community Health Support</p></div></header>
 <main class="wrap">
 <section id="home">
 <div class="panel"><h2>স্বাস্থ্যসেবা সহায়ক</h2><p class="sub">প্রয়োজনীয় মূল্যায়ন ও হিসাব—এক জায়গায়, সহজ বাংলায়</p></div>
-<div class="grid">
+<div class="feature-layout">
+<div class="feature-row two">
 <button class="tile" onclick="show('child')">👶<b>শিশু ও কিশোরের বৃদ্ধি</b><small>০–১৯ বছর • WHO গ্রোথ রেফারেন্স</small></button>
 <button class="tile" onclick="show('adult')">🧍<b>প্রাপ্তবয়স্কের BMI</b><small>বয়স, ওজন ও প্রকৃত উচ্চতা</small></button>
+</div>
+<div class="feature-row three">
 <button class="tile" onclick="show('preg')">🤰<b>গর্ভবতী মা</b><small>গর্ভকাল ও ওজন পরিবর্তন</small></button>
 <button class="tile" onclick="show('glucose')">🩸<b>রক্তের গ্লুকোজ</b><small>ফাস্টিং, OGTT ও র‍্যান্ডম রিডিং</small></button>
 <button class="tile" onclick="show('ageinfo')">📋<b>বয়স অনুযায়ী স্বাস্থ্যতথ্য</b><small>বয়সভিত্তিক সচেতনতা ও স্ক্রিনিং</small></button>
+</div>
 </div>
 <div class="panel"><p class="sub">স্বাস্থ্যশিক্ষা ও প্রাথমিক স্ক্রিনিংয়ের সহায়ক। কোনো ফলাফল একা রোগ নির্ণয় বা চিকিৎসার বিকল্প নয়।</p></div>
 </section>
