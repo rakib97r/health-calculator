@@ -1,4 +1,4 @@
-const CACHE='health-calculator-v5';
+const CACHE='health-calculator-v6';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./data/who-growth-data.json'];
 
 self.addEventListener('install',event=>{
