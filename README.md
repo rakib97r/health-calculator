@@ -1,28 +1,31 @@
 # Health Calculator
 
-বাংলা, সবুজ-সাদা, অফলাইন-সক্ষম Health Calculator।
-
-স্লোগান: **সুস্থ জীবনের স্মার্ট সহায়ক**
+বাংলা, সবুজ-সাদা, Progressive Web App (PWA) ভিত্তিক স্বাস্থ্য ক্যালকুলেটর। মোবাইল ব্রাউজার থেকে ইনস্টল করা যায়; প্রথমবার WHO ডেটা লোড হলে মূল অ্যাপ ও ডেটা অফলাইনে ক্যাশ হবে।
 
 ## Modules
-- শিশু বৃদ্ধি (০–৫ বছর): জন্মতারিখ, লিঙ্গ এবং ঐচ্ছিক MUAC।
-- প্রাপ্তবয়স্ক: বয়স, ওজন এবং উচ্চতা দিলে BMI।
-- গর্ভবতী মা: গর্ভকাল, উচ্চতা, গর্ভধারণ-পূর্ব ও বর্তমান ওজন থেকে BMI ও ওজন পরিবর্তন।
+- শিশু ও কিশোরের বৃদ্ধি (০–১৯ বছর): বয়স ও লিঙ্গ অনুযায়ী WHO median height/weight/BMI reference; প্রকৃত মাপ দিলে LMS Z-score screening.
+- প্রাপ্তবয়স্ক: বয়স, ওজন ও প্রকৃত উচ্চতা দিয়ে BMI এবং ঐ উচ্চতার জন্য BMI 18.5–24.9 ওজনের গাণিতিক পরিসর।
+- গর্ভবতী মা: গর্ভকাল, উচ্চতা, গর্ভধারণ-পূর্ব ও বর্তমান ওজন থেকে BMI ও ওজন পরিবর্তনের হিসাব।
+
+## WHO data and calculation notes
+- ০–৫ বছর: WHO Child Growth Standards 2006 LMS tables; height-for-age, weight-for-age, weight-for-length/height. WHO standard অনুযায়ী ২৪ মাসের কম বয়সে recumbent length, ২৪ মাস বা বেশি বয়সে standing height ব্যবহার করতে হবে.
+- ৫–১৯ বছর: WHO Growth Reference 2007 LMS tables for height-for-age and BMI-for-age; weight-for-age reference is available only through 10 years.
+- Z-score uses the LMS formula. Under-five weight-for-length/height is assessed from the corresponding WHO table when actual weight and length/height are supplied.
+- Reference medians are population references, not an individual child's target or a substitute for serial growth-chart review.
+- Age and weight alone cannot determine a person's actual or ideal height or BMI. Adult BMI is therefore calculated only when measured height is supplied.
+- Pregnancy module reports arithmetic only; it does not classify risk or prescribe a weight-gain target.
 
 ## Clinical safety
-- বয়স ও ওজন দিয়ে কোনো ব্যক্তির প্রকৃত উচ্চতা বা BMI নির্ণয় করা যায় না। তাই উচ্চতা অনুমান করে দেখানো হয় না।
-- শিশুর বয়স থেকে ব্যক্তিগত ওজন/উচ্চতা নির্ধারণ করা যায় না। WHO sex-specific growth reference tables ও সঠিক মাপ ছাড়া কোনো median/classification দেখানো হবে না।
-- MUAC cut-offs in children 6–59 months: <115 mm indicates severe acute malnutrition risk; 115 to <125 mm indicates moderate acute malnutrition risk. Clinical assessment and referral are required.
-- Pregnancy weight-gain assessment needs pre-pregnancy BMI, gestational age, singleton/multiple pregnancy status and applicable national guidance. Current screen reports arithmetic values only, not risk classification or targets.
-- Educational aid only; not a diagnostic or treatment tool.
+- MUAC screening cut-offs are not implemented in this version. Use the applicable national protocol and clinical assessment.
+- Educational and screening support only; not a diagnostic or treatment tool. Check measurement technique, age accuracy and clinical context before making decisions.
 
-## Sources for clinical data integration
+## Sources
 - WHO Child Growth Standards: https://www.who.int/tools/child-growth-standards/
-- WHO 5–19 years Growth Reference: https://www.who.int/tools/growth-reference-data-for-5to19-years/
-- Bangladesh National Guidelines for Maternal Nutrition: https://nnsop.gov.bd/storage/files/resource-2025-02-24-67bc0a9551ca0.pdf
+- WHO Growth Reference 5–19 years: https://www.who.int/tools/growth-reference-data-for-5to19-years/
+- LMS data tables used in this app were sourced from public implementations that identify WHO source tables: RCPCH rcpchgrowth-python and SEHATI WHO LMS extraction. See source metadata in `data/who-growth-data.json`.
 
-## Run locally
-Serve this directory with any static web server. Core files are cached for offline use.
+## Deployment
+The GitHub Actions workflow in `.github/workflows/deploy.yml` publishes the static app to GitHub Pages on pushes to `main`. In repository Settings → Pages, select **GitHub Actions** as the build and deployment source if GitHub Pages has not been enabled yet.
 
-## Android
-Run `npm install`, then `npx cap add android`, then `npx cap sync android`. Open the Android project in Android Studio and build a debug APK.
+## Offline use
+Open the deployed app once while connected so the service worker can cache `index.html`, `manifest.webmanifest`, and `data/who-growth-data.json`. Then use the installed app offline.
