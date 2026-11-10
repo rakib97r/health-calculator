@@ -35,8 +35,10 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 <section id="child" class="hidden">
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
 <div class="panel"><h2>শিশু ও কিশোরের বৃদ্ধি মূল্যায়ন</h2>
-<div class="row"><div class="field"><label>লিঙ্গ</label><select id="sex"><option value="male">ছেলে</option><option value="female">মেয়ে</option></select></div><div class="field"><label>বয়স (বছর)</label><input id="ageY" type="number" min="0" max="19" value="1"></div></div>
-<div class="row"><div class="field"><label>অতিরিক্ত মাস</label><input id="ageM" type="number" min="0" max="11" value="0"></div><div class="field"><label>বর্তমান ওজন (কেজি)</label><input id="weight" type="number" min="0.1" max="150" step=".1" placeholder="যেমন ১০.৫"></div></div>
+<div class="row"><div class="field"><label>জন্মতারিখ</label><input id="childDob" type="date"></div><div class="field"><label>লিঙ্গ</label><select id="sex"><option value="male">ছেলে</option><option value="female">মেয়ে</option></select></div></div>
+<div id="childAgeDisplay" class="result">জন্মতারিখ দিলে বয়স স্বয়ংক্রিয়ভাবে হিসাব হবে।</div>
+<input id="ageY" type="hidden"><input id="ageM" type="hidden">
+<div class="row"><div class="field"><label>বর্তমান ওজন (কেজি)</label><input id="weight" type="number" min="0.1" max="150" step=".1" placeholder="যেমন ১০.৫"></div>
 <div class="field"><label>বর্তমান উচ্চতা/দৈর্ঘ্য (সেমি) — জানা থাকলে</label><input id="height" type="number" min="30" max="220" step=".1" placeholder="যেমন ৮০"></div>
 <p class="sub">বয়স ও লিঙ্গ দিলেই WHO অনুযায়ী মধ্যম ওজন, উচ্চতা ও BMI রেফারেন্স দেখাবে। প্রকৃত BMI ও পুষ্টিগত অবস্থা নির্ণয়ে শিশুর বর্তমান উচ্চতা ও ওজন মাপা প্রয়োজন।</p>
 <div id="childOut"><div class="result">বয়স ও লিঙ্গ নির্বাচন করলেই WHO রেফারেন্স স্বয়ংক্রিয়ভাবে দেখা যাবে।</div></div>
@@ -45,7 +47,9 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
 <div class="panel"><h2>প্রাপ্তবয়স্কের স্বাস্থ্য রেফারেন্স</h2>
 <p class="sub">বয়স ও লিঙ্গ নির্বাচন করলেই প্রযোজ্য রেফারেন্স/সীমাবদ্ধতা স্বয়ংক্রিয়ভাবে দেখাবে।</p>
-<div class="row"><div class="field"><label>বয়স (বছর)</label><input id="adultAge" type="number" min="18" max="120" placeholder="যেমন ৩০"></div><div class="field"><label>লিঙ্গ</label><select id="adultSex"><option value="male">পুরুষ</option><option value="female">নারী</option></select></div></div>
+<div class="row"><div class="field"><label>জন্মতারিখ</label><input id="adultDob" type="date"></div><div class="field"><label>লিঙ্গ</label><select id="adultSex"><option value="male">পুরুষ</option><option value="female">নারী</option></select></div></div>
+<div id="adultAgeDisplay" class="result">জন্মতারিখ দিলে বয়স স্বয়ংক্রিয়ভাবে হিসাব হবে।</div>
+<input id="adultAge" type="hidden">
 <div id="adultRefOut"><div class="result">বয়স লিখলেই তথ্য দেখা যাবে।</div></div>
 <h3 style="font-size:15px;margin:14px 0 5px">ঐচ্ছিক: নিজের মাপ</h3>
 <div class="row"><div class="field"><label>বর্তমান ওজন (কেজি)</label><input id="adultWeight" type="number" min="1" max="300" step=".1"></div><div class="field"><label>প্রকৃত উচ্চতা (সেমি)</label><input id="adultHeight" type="number" min="100" max="230" step=".1" placeholder="যেমন ১৬৫"></div></div>
@@ -76,7 +80,9 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 <section id="ageinfo" class="hidden">
 <button class="back" onclick="show('home')">← হোমে ফিরুন</button>
 <div class="panel"><h2>বয়স অনুযায়ী স্বাস্থ্যতথ্য</h2>
-<div class="field"><label>বয়স (বছর)</label><input id="infoAge" type="number" min="0" max="120" placeholder="বয়স লিখো"></div>
+<div class="field"><label>জন্মতারিখ</label><input id="infoDob" type="date"></div>
+<div id="infoAgeDisplay" class="result">জন্মতারিখ দিলে বয়সভিত্তিক তথ্য দেখা যাবে।</div>
+<input id="infoAge" type="hidden">
 <div id="ageInfoOut"><div class="result">বয়স লিখলেই বয়সভিত্তিক স্বাস্থ্যতথ্য দেখা যাবে।</div></div>
 <p class="tiny">এগুলো সাধারণ স্বাস্থ্যশিক্ষামূলক স্মরণিকা। ব্যক্তির ঝুঁকি, উপসর্গ, পূর্বের রোগ ও জাতীয় টিকাদান/স্ক্রিনিং নির্দেশিকা অনুযায়ী পরামর্শ ভিন্ন হতে পারে।</p>
 </div></section>
@@ -85,6 +91,25 @@ header{background:linear-gradient(135deg,var(--d),var(--g));color:white;padding:
 <script>
 let growth=null;const $=id=>document.getElementById(id);
 function show(id){['home','child','adult','preg','glucose','ageinfo'].forEach(x=>$(x).classList.toggle('hidden',x!==id));scrollTo(0,0)}
+function ageFromDob(raw){
+ if(!raw)return null;
+ const p=raw.split('-').map(Number),dob=new Date(p[0],p[1]-1,p[2]);
+ if(!Number.isFinite(dob.getTime())||dob.getFullYear()!==p[0]||dob.getMonth()!==p[1]-1||dob.getDate()!==p[2])return null;
+ const today=new Date();today.setHours(0,0,0,0);dob.setHours(0,0,0,0);
+ if(dob>today)return {future:true};
+ let y=today.getFullYear()-dob.getFullYear(),m=today.getMonth()-dob.getMonth(),d=today.getDate()-dob.getDate();
+ if(d<0){m--;const prevMonth=new Date(today.getFullYear(),today.getMonth(),0);d+=prevMonth.getDate()}
+ if(m<0){y--;m+=12}
+ return {years:y,months:m,days:d,totalMonths:y*12+m};
+}
+function showAgeText(a){
+ return a.years+' বছর '+a.months+' মাস '+a.days+' দিন';
+}
+function setDateMax(){
+ const max=new Date().toISOString().slice(0,10);
+ ['childDob','adultDob','infoDob'].forEach(id=>{if($(id))$(id).max=max});
+}
+setDateMax();
 function bn(n,d=1){return Number(n).toFixed(d).replace(/\d/g,x=>'০১২৩৪৫৬৭৮৯'[x])}
 function fmt(n,d=1){return Number.isFinite(n)?bn(n,d):'—'}
 function lmsZ(x,p){if(!p||!Number.isFinite(x)||x<=0)return null;let z=Math.abs(p.L)<1e-8?Math.log(x/p.M)/p.S:(Math.pow(x/p.M,p.L)-1)/(p.L*p.S);return Number.isFinite(z)?z:null}
@@ -168,17 +193,42 @@ function pregCalc(){
  if(wout){if(h>0&&p>0&&n>0){const bmi=p/Math.pow(h/100,2),change=n-p;wout.innerHTML='<div class="result">গর্ভধারণ-পূর্ব BMI: <b>'+fmt(bmi,2)+'</b><br>ওজনের পরিবর্তন: <b>'+(change>=0?'+':'')+fmt(change)+' কেজি</b><br><small>ওজন বৃদ্ধির লক্ষ্য BMI, একক/একাধিক গর্ভ, গর্ভকাল ও চিকিৎসকের মূল্যায়নের ওপর নির্ভর করে।</small></div>'}else wout.innerHTML=''}
 }
 
+function childDobCalc(){
+ const a=ageFromDob($('childDob').value);
+ if(!a){$('ageY').value='';$('ageM').value='';$('childAgeDisplay').innerHTML='<div class="result">জন্মতারিখ নির্বাচন করো।</div>';if(growth)childCalc();return}
+ if(a.future){$('ageY').value='';$('ageM').value='';$('childAgeDisplay').innerHTML='<div class="warning">জন্মতারিখ ভবিষ্যতের হতে পারে না।</div>';return}
+ $('ageY').value=a.years;$('ageM').value=a.months;
+ $('childAgeDisplay').innerHTML='<b>বর্তমান বয়স:</b> '+showAgeText(a);
+ if(growth)childCalc();
+}
+function adultDobCalc(){
+ const a=ageFromDob($('adultDob').value);
+ if(!a){$('adultAge').value='';$('adultAgeDisplay').innerHTML='জন্মতারিখ নির্বাচন করো।';adultCalc();return}
+ if(a.future){$('adultAge').value='';$('adultAgeDisplay').innerHTML='<div class="warning">জন্মতারিখ ভবিষ্যতের হতে পারে না।</div>';adultCalc();return}
+ $('adultAge').value=a.years;$('adultAgeDisplay').innerHTML='<b>বর্তমান বয়স:</b> '+showAgeText(a);adultCalc();
+}
+function infoDobCalc(){
+ const a=ageFromDob($('infoDob').value);
+ if(!a){$('infoAge').value='';$('infoAgeDisplay').innerHTML='জন্মতারিখ নির্বাচন করো।';ageInfoCalc();return}
+ if(a.future){$('infoAge').value='';$('infoAgeDisplay').innerHTML='<div class="warning">জন্মতারিখ ভবিষ্যতের হতে পারে না।</div>';ageInfoCalc();return}
+ $('infoAge').value=a.years;$('infoAgeDisplay').innerHTML='<b>বর্তমান বয়স:</b> '+showAgeText(a);ageInfoCalc();
+}
 function runAutoCalculations(){
  if(growth && !$('child').classList.contains('hidden'))childCalc();
  if(!$('adult').classList.contains('hidden'))adultCalc();
  if(!$('ageinfo').classList.contains('hidden'))ageInfoCalc();
  if(!$('glucose').classList.contains('hidden')&&$('glucoseValue').value)glucoseCalc();
 }
-['sex','ageY','ageM','weight','height'].forEach(id=>$(id).addEventListener('input',()=>{if(growth)childCalc()}));
-['sex','ageY','ageM','weight','height'].forEach(id=>$(id).addEventListener('change',()=>{if(growth)childCalc()}));
-['adultAge','adultSex','adultWeight','adultHeight'].forEach(id=>$(id).addEventListener('input',adultCalc));
-['adultAge','adultSex','adultWeight','adultHeight'].forEach(id=>$(id).addEventListener('change',adultCalc));
-$('infoAge').addEventListener('input',ageInfoCalc);
+['sex','weight','height'].forEach(id=>$(id).addEventListener('input',()=>{if(growth)childCalc()}));
+['sex','weight','height'].forEach(id=>$(id).addEventListener('change',()=>{if(growth)childCalc()}));
+$('childDob').addEventListener('input',childDobCalc);
+$('childDob').addEventListener('change',childDobCalc);
+['adultSex','adultWeight','adultHeight'].forEach(id=>$(id).addEventListener('input',adultCalc));
+['adultSex','adultWeight','adultHeight'].forEach(id=>$(id).addEventListener('change',adultCalc));
+$('adultDob').addEventListener('input',adultDobCalc);
+$('adultDob').addEventListener('change',adultDobCalc);
+$('infoDob').addEventListener('input',infoDobCalc);
+$('infoDob').addEventListener('change',infoDobCalc);
 $('glucoseType').addEventListener('change',glucoseCalc);
 $('glucoseValue').addEventListener('input',()=>{if($('glucoseValue').value)glucoseCalc();else $('glucoseOut').innerHTML=''});
 fetch('./data/who-growth-data.json').then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{growth=d;childCalc();adultCalc()}).catch(()=>{document.querySelector('main').insertAdjacentHTML('afterbegin','<div class="warning">WHO রেফারেন্স ডেটা লোড হয়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করো।</div>')});
