@@ -21,6 +21,11 @@ jobs:
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
       - run: npm install
+      - name: Prepare web assets
+        run: |
+          mkdir -p www
+          cp index.html manifest.webmanifest icon.svg sw.js www/
+          cp -r data www/data
       - run: npx cap add android
       - run: npx cap sync android
       - name: Build debug APK
